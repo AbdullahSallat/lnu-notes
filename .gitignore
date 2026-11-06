@@ -27,3 +27,18 @@ trust.json
 # Downloads and system files
 *.pkg
 .DS_Store
+
+
+# Azure Terraform evidence and local files
+terraform-azure/plan-*.txt
+terraform-azure/*.tfplan
+terraform-azure/*.tfstate
+terraform-azure/*.tfstate.*
+terraform-azure/.terraform/
+
+# Keep Azure provider lock file
+!terraform-azure/.terraform.lock.hcl
+
+# Private SSH keys
+2dv705_azure
+2dv705_azure.pub
