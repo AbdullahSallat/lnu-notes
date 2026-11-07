@@ -17,7 +17,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
   name     = "rg-2dv705"
-  location = "swedencentral"
+  location = "austriaeast"
 }
 
 

@@ -60,7 +60,7 @@ DB_PASS=${DB_PASS}
 DB_NAME=lnunotes
 AZURE_STORAGE_ACCOUNT=${STORAGE_ACCOUNT}
 AZURE_BLOB_CONTAINER=images
-AZURE_REGION=swedencentral
+AZURE_REGION=austriaeast
 EOF
 
 chmod 600 /etc/lnu-notes.env
