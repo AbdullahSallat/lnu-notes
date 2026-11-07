@@ -17,3 +17,6 @@ write_files:
     permissions: '0700'
     encoding: b64
     content: ${bootstrap_b64}
+    
+runcmd:
+  - [bash, /usr/local/sbin/web-bootstrap.sh, "${vault_name}", "${db_host}", "${storage_account}"]
