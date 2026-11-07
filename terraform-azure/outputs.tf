@@ -1,4 +1,3 @@
-
 output "web_public_ip" {
   description = "Public IP address of the web server"
   value       = azurerm_public_ip.web_ip.ip_address

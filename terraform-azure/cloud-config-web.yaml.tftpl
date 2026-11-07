@@ -1,0 +1,19 @@
+
+#cloud-config
+# First-boot configuration for the Azure web VM
+
+package_update: true
+
+packages:
+  - python3
+  - python3-venv
+  - python3-pip
+  - git
+  - curl
+
+write_files:
+  - path: /usr/local/sbin/web-bootstrap.sh
+    owner: root:root
+    permissions: '0700'
+    encoding: b64
+    content: ${bootstrap_b64}

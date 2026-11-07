@@ -225,6 +225,23 @@ resource "azurerm_linux_virtual_machine" "web" {
     public_key = file(pathexpand("~/.ssh/2dv705_azure.pub"))
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
+
+
+  custom_data = base64encode(templatefile(
+    "${path.module}/cloud-config-web.yaml.tftpl",
+    {
+      bootstrap_b64   = filebase64("${path.module}/web-bootstrap.sh")
+      vault_name      = azurerm_key_vault.app.name
+      db_host         = azurerm_network_interface.db_nic.private_ip_address
+      storage_account = azurerm_storage_account.images.name
+    }
+  ))
+
+
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
@@ -256,6 +273,18 @@ resource "azurerm_linux_virtual_machine" "db" {
     username   = "azureuser"
     public_key = file(pathexpand("~/.ssh/2dv705_azure.pub"))
   }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  custom_data = base64encode(templatefile(
+    "${path.module}/cloud-config-db.yaml.tftpl",
+    {
+      vault_name    = azurerm_key_vault.app.name
+      bootstrap_b64 = filebase64("${path.module}/db-bootstrap.sh")
+    }
+  ))
 
   os_disk {
     caching              = "ReadWrite"

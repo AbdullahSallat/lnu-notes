@@ -1,0 +1,29 @@
+
+#cloud-config
+# Automatic database setup on Azure
+
+package_update: true
+
+packages:
+  - mariadb-server
+  - curl
+  - python3
+
+write_files:
+  - path: /etc/mysql/mariadb.conf.d/99-bind.cnf
+    owner: root:root
+    permissions: '0644'
+    content: |
+      [mysqld]
+      bind-address = 0.0.0.0
+
+  - path: /usr/local/sbin/db-bootstrap.sh
+    owner: root:root
+    permissions: '0700'
+    encoding: b64
+    content: ${bootstrap_b64}
+
+runcmd:
+  - systemctl enable mariadb
+  - systemctl restart mariadb
+  - [bash, /usr/local/sbin/db-bootstrap.sh, "${vault_name}"]
