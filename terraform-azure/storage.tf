@@ -13,6 +13,15 @@ resource "azurerm_storage_account" "images" {
   min_tls_version                 = "TLS1_2"
   https_traffic_only_enabled      = true
   allow_nested_items_to_be_public = false
+
+  # Protect images against overwrites and accidental deletion
+  blob_properties {
+    versioning_enabled = true
+
+    delete_retention_policy {
+      days = 7
+    }
+  }
 }
 
 # Private container for uploaded images
